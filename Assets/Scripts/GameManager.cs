@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
         currentScore = 0;
     }
 
-    void Update()
+    public void AddPoints(int points)
     {
-        
+        currentScore += points;
     }
 }
