@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public int currentScore;
     public int ballsAvailable = 10;
 
-    public bool isGameActive = true;
+    public bool isGameActive = false;
 
     [Header("UI")]
     public TextMeshProUGUI scoreText;
@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         ballsText.text = "Balls: " + ballsAvailable;
         mainMenu.SetActive(false);
         gameUI.SetActive(true);
+        isGameActive = true;
 
         StartCoroutine(CheckWinCondition());
     }

@@ -8,11 +8,15 @@ public class Spawner : MonoBehaviour
     private GameObject ballPrefab;
     [SerializeField]
     private GameObject spawnPos;
+    [SerializeField]
+    private AudioClip spawnClip;
 
     private GameManager gameManager;
+    private AudioSource audioSource;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         Canvas canvas = GetComponentInChildren<Canvas>();
@@ -26,6 +30,7 @@ public class Spawner : MonoBehaviour
         {
             Instantiate(ballPrefab, spawnPos.transform.position, ballPrefab.transform.rotation);
             gameManager.DecrementBall();
+            audioSource.PlayOneShot(spawnClip);
         }
     } 
 }
