@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,15 +14,10 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI ballsText;
-
-    void Start()
-    {
-        currentScore = 0;
-        AddPoints(0);
-        ballsText.text = "Balls: " + ballsAvailable;
-
-        StartCoroutine(CheckWinCondition());
-    }
+    public GameObject gameUI;
+    public GameObject gameOverMenu;
+    public TextMeshProUGUI finalScoreText;
+    public GameObject mainMenu;
 
     public void AddPoints(int points)
     {
@@ -43,8 +39,32 @@ public class GameManager : MonoBehaviour
             if (ballsAvailable < 1 && GameObject.FindGameObjectsWithTag("Ball").Length < 1)
             {
                 isGameActive = false;
-                Debug.Log("Round over");
+                finalScoreText.text = "Final Score: " + currentScore;
+                gameUI.SetActive(false);
+                gameOverMenu.SetActive(true);
             }
         }
+    }
+
+    public void StartGame()
+    {
+        currentScore = 0;
+        AddPoints(0);
+        ballsText.text = "Balls: " + ballsAvailable;
+        mainMenu.SetActive(false);
+        gameUI.SetActive(true);
+
+        StartCoroutine(CheckWinCondition());
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartGame();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
