@@ -20,6 +20,7 @@ public class ScoreBox : MonoBehaviour
         if (other.gameObject.CompareTag("Ball"))
         {
             gameManager.AddPoints(points);
+            Destroy(other.gameObject, 1);
         }
     }
 }

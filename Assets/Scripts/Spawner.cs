@@ -9,9 +9,23 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private GameObject spawnPos;
 
-    private void OnMouseDown()
+    private GameManager gameManager;
+
+    private void Start()
     {
-        Debug.Log("Clicked");
-        Instantiate(ballPrefab, spawnPos.transform.position, ballPrefab.transform.rotation);
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
+        Canvas canvas = GetComponentInChildren<Canvas>();
+        if (canvas.worldCamera == null)
+            canvas.worldCamera = Camera.main;
     }
+
+    public void SpawnBall()
+    {
+        if (gameManager.isGameActive && gameManager.ballsAvailable > 0)
+        {
+            Instantiate(ballPrefab, spawnPos.transform.position, ballPrefab.transform.rotation);
+            gameManager.DecrementBall();
+        }
+    } 
 }
